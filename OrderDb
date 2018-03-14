@@ -1,0 +1,30 @@
+use db01tms55_1718
+create table cart_1343257(ord_id int identity(1000,1) unique,item_name varchar(30) foreign key references Item_1343257(item_name) ,QuantitiyNeeded int,totalPrice bigint,custname varchar(20),custcont bigint,cust_email varchar(20),Orderdate datetime)
+create table Item_1343257(ItemId int identity(100,1),item_name varchar(30) primary key,price int,mfd datetime,QuantitiyAvailable int)
+insert into Item_1343257 values('Laptop',35000,'01/01/2017',3)
+select * from Item_1343257 order by ItemId
+select * from cart_1343257
+create table cart_133257(item_name varchar(30) ,QuantitiyNeeded int,custname varchar(20),custcont bigint,cust_email varchar(20))
+
+create procedure
+ord_cart_insert31
+@ord_id int out,@item_name varchar(30) ,@QuantitiyNeeded int,@totalPrice bigint,@custname varchar(20),@custcont bigint,@cust_email varchar(20),@Orderdate datetime
+as
+begin
+insert into cart_1343257 values(@item_name,@QuantitiyNeeded,@totalPrice,@custname,@custcont,@cust_email,@Orderdate)
+set @ord_id=@@IDENTITY
+end
+create procedure
+viw_orderdtls_36
+as
+begin
+select c1.ord_id,c1.item_name,c1.QuantitiyNeeded,c1.totalPrice,c1.custname,c1.cust_email,c1.Orderdate,i1.mfd from cart_1343257 c1 join Item_1343257 i1
+on c1.item_name=i1.item_name
+end
+create procedure
+cncl_ordr_356
+@ord_id int
+as
+begin
+delete from cart_1343257 where ord_id=@ord_id
+end
